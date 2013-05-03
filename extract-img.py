@@ -1,4 +1,5 @@
 from HTMLParser import HTMLParser
+from urlparse import urlparse
 import sys
 
 # from: http://stackoverflow.com/a/11659969/447661
@@ -15,7 +16,8 @@ class MyHTMLParser(HTMLParser):
         if tag == 'img':
             for name,value in attrs:
                 if name == 'src':
-                    images.append(value)
+                    o = urlparse(value)
+                    images.append(o.scheme + "://" + o.netloc + o.path)
 
 # instantiate the parser and fed it some HTML
 parser = MyHTMLParser()
